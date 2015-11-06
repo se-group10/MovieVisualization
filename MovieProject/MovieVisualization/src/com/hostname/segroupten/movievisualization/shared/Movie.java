@@ -3,23 +3,35 @@ package com.hostname.segroupten.movievisualization.shared;
 import java.io.Serializable;
 import java.util.Date;
 
-public  class Movie implements Serializable {
+public class Movie implements Serializable {
     /**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public final String name;
-    public final Date releasedate;
-    public final String country;
-    public final int length;
-    public final String source;
-
+	private String name;
+    private Date releasedate;
+    private String country;
+    private int length;
+    private String source;
+    private String genres;
+    private String language;
+    
     public Movie(String name, Date releasedate, String country, int length, String source) {
+    	 this.name = name;
+         this.releasedate = releasedate;
+         this.country = country;
+         this.length = length;
+         this.source = source;
+    }
+
+    public Movie(String name, Date releasedate, String country, int length, String source, String genres, String language) {
        this.name = name;
        this.releasedate = releasedate;
        this.country = country;
        this.length = length;
        this.source = source;
+       this.genres = genres;
+       this.language = language;
     }
     
     public String getName(){
@@ -37,5 +49,19 @@ public  class Movie implements Serializable {
     public int getLength(){
     	return this.length;
     }
+    
+    public String getSource(){
+    	return this.source;
+    }
+
+	public String getGenres() {
+		return this.genres;
+	}
+
+	public String getLanguage() {
+		return this.language;
+	}
+    
+    
  }
  
