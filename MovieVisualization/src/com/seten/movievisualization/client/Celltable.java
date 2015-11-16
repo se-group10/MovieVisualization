@@ -25,6 +25,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
+import com.googlecode.gwt.charts.client.geochart.GeoChart;
 //import com.hostname.segroupten.movievisualization.client.MovieVisualization.ReleaseDateSort;
 //import com.hostname.segroupten.movievisualization.shared.Movie;
 
@@ -107,7 +108,7 @@ public class Celltable extends CellTable {
 	     table.addColumn(genreColumn, "Genre");
 
 	      
-	      // Make the name column sortable.
+	      // Make the column sortable.
 	      nameColumn.setSortable(true);
 	      dateColumn.setSortable(true);
 	      countryColumn.setSortable(true);
@@ -156,21 +157,11 @@ public class Celltable extends CellTable {
 	     ListHandler<Movie> columnSortHandler = new ListHandler<Movie>(list);
 	     columnSortHandler.setComparator(nameColumn,new NameSort());
 	     
-	     // Sorting lengthColumn
-	     // Add a ColumnSortEvent.ListHandler to connect sorting to the
-	     // java.util.List.
+	     // Sorting Columns
 	     columnSortHandler.setComparator(lengthColumn, new LengthSort());
-	     
-	     // Sorting countryColumn
-	     // Add a ColumnSortEvent.ListHandler to connect sorting to the
-	     // java.util.List.
-	     // git test
-	     
 	     columnSortHandler.setComparator(countryColumn, new CountrySort());
 	     columnSortHandler.setComparator(genreColumn, new GenreSort());
 	     columnSortHandler.setComparator(languageColumn, new LanguageSort());
-	     
-	     // Sorting dateColumn
 	     columnSortHandler.setComparator(dateColumn, new DateSort());
 	     	
 	     	
@@ -228,31 +219,11 @@ public class Celltable extends CellTable {
 	      RootPanel.get("adv").add(panel2);
 	      RootPanel.get("gwtContainer").add(panel);
 		
-		
+
 	}
 	private void refreshtable() {
 		// TODO Auto-generated method stub
 	}
 
-	private static int compareInt(int first, int second) {
-		if(first == second){
-			return 0;
-		}
-		
-		else if(first > second){
-			return 1; }
-			else return -1;
-	}
-
-	private static int compareDate(Date first, Date second) {
-		if(first.equals(second)){
-			return 0;	
-		}
-		
-		else if(first.before(second)) {
-			return -1;
-			}
-		else return 1;
-	}
 
 }

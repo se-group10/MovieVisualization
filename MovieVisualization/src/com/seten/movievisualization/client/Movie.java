@@ -8,10 +8,10 @@ public class Movie implements Serializable {
 	/**
 	 * 
 	 */
-public   String name;
-public  Date releasedate;
-public  String country;
-public   int length;
+public String name;
+public Date releasedate;
+public String country;
+public int length;
 public String genre;
 public String language;
 
