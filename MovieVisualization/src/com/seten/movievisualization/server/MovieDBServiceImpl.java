@@ -1,5 +1,6 @@
 package com.seten.movievisualization.server;
 
+import com.seten.movievisualization.client.KeyPairValue;
 import com.seten.movievisualization.client.Movie;
 import java.util.List;
 import com.seten.movievisualization.client.MovieDBService;
@@ -49,6 +50,20 @@ public class MovieDBServiceImpl extends RemoteServiceServlet implements MovieDBS
 				      new Movie("xy", new Date(1929), "Zürich", 90,"Fantasy", "Swissgerman")
 					 );
 		return MOVIES;
+	}
+	
+	public List<KeyPairValue> getKeyValuePair(int i) {
+		
+		List<KeyPairValue> KEYVALUEPAIR = Arrays.asList(
+				
+				new KeyPairValue("GB", 10),
+				new KeyPairValue("United States of America", 20),
+				new KeyPairValue("India", 30)
+				
+				);
+		
+		
+		return KEYVALUEPAIR;
 	}
 
 }

@@ -9,4 +9,6 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 public interface MovieDBService extends RemoteService{
 
 	List<Movie> getMovies(int amount);
+	
+	List<KeyPairValue> getKeyValuePair(int i);
 }

@@ -26,6 +26,7 @@ public class MovieVisualization implements EntryPoint {
 	public void onModuleLoad() {
 	// makes an rpc request
 	getMovies();
+	getKeyValuePair();
 	
 	Label l1 = new Label ("");
 	l1.setHeight("200");
@@ -70,5 +71,40 @@ public class MovieVisualization implements EntryPoint {
 		// actual request to the serverside
 		movieDBSvc.getMovies(1, callback);
 		
+	}
+	
+	private void getKeyValuePair(){
+		// initializes service proxy
+		if (movieDBSvc == null){
+			movieDBSvc = GWT.create(MovieDBService.class);
+		}
+		
+		
+		AsyncCallback<List<KeyPairValue>> callback = new AsyncCallback<List<KeyPairValue>>(){
+
+			
+
+			@Override
+			// inherted methods
+			// method called when a serverside error occurs
+			public void onFailure(Throwable caught) {
+				Window.alert("RPC request to server not successfull");
+				
+			}
+
+			// method called when no serverside error occurs
+			@Override
+			public void onSuccess(List<KeyPairValue> result) {
+			// Window.alert("RPC query succesfull");
+				Geomap gmp = new Geomap(result);
+				gmp.initialize();
+				
+			}
+			
+		};
+		// actual request to the serverside
+		movieDBSvc.getKeyValuePair(1, callback);
+		
+
 	}
 }
