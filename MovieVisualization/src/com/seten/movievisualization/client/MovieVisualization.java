@@ -1,5 +1,6 @@
 package com.seten.movievisualization.client;
 
+import java.util.Collections;
 import java.util.List;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -23,17 +24,20 @@ import com.googlecode.gwt.charts.client.geochart.GeoChartOptions;
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
-public class MovieVisualization extends GeoChart implements EntryPoint {
+public class MovieVisualization implements EntryPoint {
 	
 	private MovieDBServiceAsync movieDBSvc = GWT.create(MovieDBService.class);
 	
 	
+
 	
 	
 	
 	public void onModuleLoad() {
 	// makes an rpc request
 	getMovies();
+	getKeyValuePair();
+	
 	
 	Label l1 = new Label ("");
 	l1.setHeight("200");
@@ -55,7 +59,7 @@ public class MovieVisualization extends GeoChart implements EntryPoint {
 	
 	// TODO For GeoChart create DataTable. Create DataTable from: List<Movie> or CellTable? 
 	
-	GeoChart geoChart = new GeoChart();
+	/*GeoChart geoChart = new GeoChart();
 	
 	// Example Data
 	DataTable dataTable = DataTable.create();
@@ -80,19 +84,17 @@ public class MovieVisualization extends GeoChart implements EntryPoint {
 	//Options
 	GeoChartOptions options = GeoChartOptions.create();
 	GeoChartColorAxis geoChartColorAxis = GeoChartColorAxis.create();
-	geoChartColorAxis.setColors("green", "yellow", "red");
+	geoChartColorAxis.setColors("green", "yellow");
 	options.setColorAxis(geoChartColorAxis);
 	options.setDatalessRegionColor("gray");
 	//Draw
 	geoChart.draw(dataTable, options);
 	//Add
 	RootPanel.get("gwtContainer").add(geoChart);
-	
-	
-	
-	
+	*/
 	
 	}
+	
 
 	
 	
@@ -118,6 +120,8 @@ public class MovieVisualization extends GeoChart implements EntryPoint {
 			public void onSuccess(List<Movie> result) {
 			// Window.alert("RPC query succesfull");
 				Celltable ctb = new Celltable(result);
+				//Geomap gmp = new Geomap(result);
+				//gmp.initialize();
 			}
 			
 		};
@@ -127,5 +131,40 @@ public class MovieVisualization extends GeoChart implements EntryPoint {
 
 	}
 	
+	private void getKeyValuePair(){
+		// initializes service proxy
+		if (movieDBSvc == null){
+			movieDBSvc = GWT.create(MovieDBService.class);
+		}
+		
+		
+		AsyncCallback<List<KeyPairValue>> callback = new AsyncCallback<List<KeyPairValue>>(){
+
+			
+
+			@Override
+			// inherted methods
+			// method called when a serverside error occurs
+			public void onFailure(Throwable caught) {
+				Window.alert("RPC request to server not successfull");
+				
+			}
+
+			// method called when no serverside error occurs
+			@Override
+			public void onSuccess(List<KeyPairValue> result) {
+			// Window.alert("RPC query succesfull");
+				Geomap gmp = new Geomap(result);
+				gmp.initialize();
+				
+			}
+			
+		};
+		// actual request to the serverside
+		movieDBSvc.getKeyValuePair(1, callback);
+		
+
+	}
+
 	
 }

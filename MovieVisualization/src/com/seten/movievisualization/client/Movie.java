@@ -17,7 +17,7 @@ public String language;
 
 public Movie(){}
 // default constructor for the Movie class
-	public Movie(String name, Date year, String country, int length, String genre, String language) {
+public Movie(String name, Date year, String country, int length, String genre, String language) {
 	    this.name = name;
 	    this.releasedate = year;
 	    this.country = country;

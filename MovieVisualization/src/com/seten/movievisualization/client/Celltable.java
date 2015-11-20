@@ -1,6 +1,7 @@
 package com.seten.movievisualization.client;
 
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -8,6 +9,8 @@ import java.util.List;
 
 import com.google.gwt.cell.client.DateCell;
 import com.google.gwt.cell.client.NumberCell;
+import com.google.gwt.core.client.JsArray;
+import com.google.gwt.core.client.JsArrayMixed;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.CellTable;
@@ -25,9 +28,15 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
+import com.googlecode.gwt.charts.client.ColumnType;
+import com.googlecode.gwt.charts.client.DataTable;
 import com.googlecode.gwt.charts.client.geochart.GeoChart;
+import com.googlecode.gwt.charts.client.geochart.GeoChartColorAxis;
+import com.googlecode.gwt.charts.client.geochart.GeoChartOptions;
 //import com.hostname.segroupten.movievisualization.client.MovieVisualization.ReleaseDateSort;
 //import com.hostname.segroupten.movievisualization.shared.Movie;
+import com.googlecode.gwt.charts.client.util.ArrayHelper;
+import com.googlecode.gwt.charts.client.util.ChartHelper;
 
 public class Celltable extends CellTable {
 
@@ -47,7 +56,67 @@ public class Celltable extends CellTable {
 	            return object.getName();
 	         }
 	      };    
-
+	      /*
+	      // GeoMap: Count Movies per Country
+	      	int americaCounter = 0;// = Collections.frequency(result, "United States of America");
+			int unitedKingdomCounter = 0; 
+			int indiaCounter = 0;
+			
+			
+			for(Movie m : MOVIES) {
+				if(m != null){
+					if(m.country.equalsIgnoreCase("United States of America")) {
+						americaCounter++;
+					}
+					
+					
+				}
+			}
+			
+			for(Movie m : MOVIES) {
+				if(m != null){
+					if(m.country.equalsIgnoreCase("UK")) {
+						unitedKingdomCounter++;
+					}
+					
+					
+				}
+			}
+			
+			for(Movie m : MOVIES) {
+				if(m != null){
+					if(m.country.equalsIgnoreCase("India")) {
+						indiaCounter++;
+					}
+					
+					
+				}
+			}
+			
+	      
+	      // Create Objects for geoTable
+			KeyPairValue germany = new KeyPairValue("GB", unitedKingdomCounter);
+	      KeyPairValue un = new KeyPairValue("United States of America", americaCounter);
+	      KeyPairValue india = new KeyPairValue("India", indiaCounter);
+	      Object[][] geoData = {{"Country","Movies per Year"}, {germany.country, germany.counter}, {un.country, un.counter}, {india.country, india.counter}};
+	      DataTable geoTable = ChartHelper.arrayToDataTable(geoData);
+	      
+	      //Create new GeoChart
+	      GeoChart geoChartTwo = new GeoChart();
+	   
+	  	
+	      //GeoChart Options
+	     
+		GeoChartOptions optionsTwo = GeoChartOptions.create();
+		GeoChartColorAxis geoChartColorAxisTwo = GeoChartColorAxis.create();
+		geoChartColorAxisTwo.setColors("green", "yellow");
+		optionsTwo.setColorAxis(geoChartColorAxisTwo);
+		optionsTwo.setDatalessRegionColor("gray");
+		//Draw
+		geoChartTwo.draw(geoTable, optionsTwo);
+		//Add
+		RootPanel.get("gwtContainer").add(geoChartTwo);
+		*/
 
 	      // Add a date column to show the releasdate.
 	      DateCell dateCell = new DateCell();

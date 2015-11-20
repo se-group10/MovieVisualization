@@ -1,0 +1,2 @@
+serviceClass: com.seten.movievisualization.client.MovieDBService
+path: C7A5518DEE1F54B1D4EFD21DE3A7DBB2.gwt.rpc
