@@ -58,7 +58,12 @@ public class MovieDBServiceImpl extends RemoteServiceServlet implements MovieDBS
 				
 				new KeyPairValue("GB", 10),
 				new KeyPairValue("United States of America", 20),
-				new KeyPairValue("India", 30)
+				new KeyPairValue("India", 30),
+				new KeyPairValue("Canada", 40),
+				new KeyPairValue("Germany", 50),
+				new KeyPairValue("France", 60),
+				new KeyPairValue("Brazil", 70),
+				new KeyPairValue("Russia", 80)
 				
 				);
 		

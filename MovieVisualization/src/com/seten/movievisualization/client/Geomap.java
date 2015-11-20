@@ -75,7 +75,8 @@ public class Geomap {
 	*/
 	
 	//With RPC 
-	Object[][] geoDataObjects = new Object[4][2];
+	int numberOfCountries = OBJECTS.size();
+	Object[][] geoDataObjects = new Object[numberOfCountries + 1][2];
 	geoDataObjects[0][0] = "Country";
 	geoDataObjects[0][1] = "Movies per Year";
 	/*
@@ -115,9 +116,9 @@ public class Geomap {
  
 	GeoChartOptions optionsTwo = GeoChartOptions.create();
 	GeoChartColorAxis geoChartColorAxisTwo = GeoChartColorAxis.create();
-	geoChartColorAxisTwo.setColors("yellow", "red");
+	geoChartColorAxisTwo.setColors("green", "yellow", "red");
 	optionsTwo.setColorAxis(geoChartColorAxisTwo);
-	optionsTwo.setDatalessRegionColor("gray");
+	optionsTwo.setDatalessRegionColor("grey");
 	//Draw
 	geoChartTwo.draw(geoTableTwo, optionsTwo);
 	//Add
