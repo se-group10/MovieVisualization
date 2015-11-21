@@ -8,11 +8,82 @@ import com.seten.movievisualization.client.MovieDBService;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
+// import of the SQL connections
+import java.sql.*
+
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Random;
 
 public class MovieDBServiceImpl extends RemoteServiceServlet implements MovieDBService {
+	
+	// BEGINNING OF NEW, UNFINISHED CODE SNIPPET
+	
+	// connect to the SQL database via App Engine (Taken from official SQL Cloud Google page)
+	// --> exception handling is as well needed (try, catch)?
+	String url = null;
+	if (SystemProperty.environment.value() ==
+	    SystemProperty.Environment.Value.Production) {
+	  // Connecting from App Engine.
+	  // Load the class that provides the "jdbc:google:mysql://" prefix.
+	  Class.forName("com.mysql.jdbc.GoogleDriver");
+	  url = "jdbc:google:mysql://segroup10-1119:database20151114?user=root";
+	} else { // Connecting from an external network.
+	  Class.forName("com.mysql.jdbc.Driver");
+	  url = "jdbc:mysql://173.194.224.108:3306?user=root";
+	}
+	
+	// this line from elsewhere --> does it need it?
+	// or is drivermanager initialized already elsewhere?
+	DriverManager.registerDriver(new AppEngineDriver());
+	
+	try { // set up connection to the database
+		Connection conn = DriverManager.getConnection(url);
+		Statement stmt = connection.createStatement();
+		sqlquery = "whatever query you want to make";
+		ResultSet rs = stmt.executeQuery(sqlquery);
+		// where "sqlquery" is a string with a SQL statement
+		// errors of these lines should be treated with try/catch
+		
+		// Extract data from result set --> do we need this one?
+		// or is it totally fine to have the data in the rs?
+		// at least: for testing purposes to see if it works properly
+      		while(rs.next()){
+      			//Retrieve by column name
+         		String moviename = rs.getString("moviename");
+         		int releaseyear = rs.getInt("releaseyear");
+         		int runtime = rs.getInt("runtime");
+         		String languages = rs.getString("languages");
+         		String countries = rs.getString("countries");
+         		String genres = rs.getString("genres");
+         		
+	} catch (Exception e) { // catch possible exceptions
+		System.err.println("Got an exception! ");
+		System.err.println(e.getMessage());
+	} finally { // clean up environment
+		try { if (rs != null) rs.close(); } catch (SQLException e) { e.printStackTrace(); }
+		try { if (stmt != null) stmt.close(); } catch (SQLException e) { e.printStackTrace(); }
+		try { if (conn != null) conn.close(); } catch (SQLException e) { e.printStackTrace(); }
+	
+	
+	
+	
+	
+	// perhaps for later: extension of the movie database via INSERT statement
+	// string statements should be replaced whatever the informatics people type in
+	try {
+		Connection conn = DriverManager.getConnection(url);
+		Statement stmt = connection.createStatement();
+		stmt.executeUpdate("INSERT INTO movietable(MOVIENAME,RELEASEYEAR,RUNTIME,LANGUAGES,COUNTRIES,GENRES) " + "VALUES ('moviename', releaseyear, runtime, 'countries', etc...)");
+	} catch (Exception e) { 
+		System.err.println("Got an exception! ");
+		System.err.println(e.getMessage());
+	
+	
+	// END OF NEW, UNFINISHED CODE SNIPPET
+	
+	
+	
 	@Override
 	public List<Movie> getMovies(int amount) {
 		
