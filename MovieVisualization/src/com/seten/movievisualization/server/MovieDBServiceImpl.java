@@ -17,6 +17,8 @@ import java.util.Random;
 
 public class MovieDBServiceImpl extends RemoteServiceServlet implements MovieDBService {
 	
+	// // // WARNING: PLEASE DON'T READ OR TRY TO RUN THIS, IT'S ONLY MY FIRST ATTEMPT :-) // // //
+	
 	// BEGINNING OF NEW, UNFINISHED CODE SNIPPET
 	
 	// connect to the SQL database via App Engine (Taken from official SQL Cloud Google page)
