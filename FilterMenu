@@ -1,0 +1,70 @@
+package com.seten.movievisualization.client;
+
+import java.lang.Object;
+
+import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.MultiWordSuggestOracle;
+import com.google.gwt.user.client.ui.SuggestBox;
+import com.google.gwt.user.datepicker.client.DatePicker;
+import com.google.gwt.user.client.ui.ListBox;
+
+public class FilterMenu 
+{
+	// Text box to search for movienames
+	textBox tb = new textBox();
+	
+	//Release Date
+	DatePicker pickEarliestDate = new DatePicker();
+	final Label text = new Label();
+	
+	DatePicker pickLatestDate = new DatePicker();
+	final Label text = new Label();
+	
+	// Choose language with suggest box
+	// Sets language propositions
+	MultiWordSuggestOracle allLanguages = new MultiWordSuggestOracle();
+	//allLanguages.add(Movie.getLanguage());
+	//soll alle verfügbaren Sprachen der Datenbank anzeigen
+	   
+	SuggestBox languageBox = new SuggestBox(allLanguages);
+	
+	// Choose country with suggest box
+	//Sets country propositions
+	MultiWordSuggestOracle allCountries = new MultiWordSuggestOracle();
+	//allCountries.add(Movie.getCountry());
+	//soll alle verfügbaren Länder der Datenbank anzeigen
+	   
+	SuggestBox countryBox = new SuggestBox(allCountries);
+	
+	// Select the length of the movies
+	// List to select minimum length
+	listBox minLength = new listBox();
+	minLength.addItem("0 min");
+	minLength.addItem("15 min");
+	minLength.addItem("30 min");
+	minLength.addItem("60 min");
+	minLength.addItem("90 min");
+	minLength.addItem("120 min");
+	minLength.addItem(">120 min");
+	
+	minLength.setVisibleItemCount(7);
+	
+	// List to select maximum length
+	listBox maxLength = new listBox();
+	maxLength.addItem("0 min");
+	maxLength.addItem("15 min");
+	maxLength.addItem("30 min");
+	maxLength.addItem("60 min");
+	maxLength.addItem("90 min");
+	maxLength.addItem("120 min");
+	maxLength.addItem(">120 min");
+	
+	maxLength.setVisibleItemCount(7);
+	
+	// Buttons for further options
+	final PushButton showCelltable = new PushButton("Show celltable");
+  		 	
+  	final PushButton showWorldmap = new PushButton("Show worldmap");
+  	
+  	}
+}
