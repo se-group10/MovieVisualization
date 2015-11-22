@@ -17,12 +17,10 @@ import java.util.Random;
 
 public class MovieDBServiceImpl extends RemoteServiceServlet implements MovieDBService {
 	
-	// // // WARNING: PLEASE DON'T READ OR TRY TO RUN THIS, IT'S ONLY MY FIRST ATTEMPT :-) // // //
-	
 	// BEGINNING OF NEW, UNFINISHED CODE SNIPPET
 	
 	// connect to the SQL database via App Engine (Taken from official SQL Cloud Google page)
-	// --> exception handling is as well needed (try, catch)?
+	// --> exception handling needed as well (try, catch)?
 	String url = null;
 	if (SystemProperty.environment.value() ==
 	    SystemProperty.Environment.Value.Production) {
@@ -39,50 +37,135 @@ public class MovieDBServiceImpl extends RemoteServiceServlet implements MovieDBS
 	// or is drivermanager initialized already elsewhere?
 	DriverManager.registerDriver(new AppEngineDriver());
 	
-	try { // set up connection to the database
-		Connection conn = DriverManager.getConnection(url);
-		Statement stmt = connection.createStatement();
-		sqlquery = "whatever query you want to make";
-		ResultSet rs = stmt.executeQuery(sqlquery);
-		// where "sqlquery" is a string with a SQL statement
-		// errors of these lines should be treated with try/catch
+	
+	
+	// // IDEA: USE A BASIC METHOD WITHIN SPECIFIC METHODS TO DO THE MAJOR (ALWAYS SAME) WORK
+	
+	// basic get-method that can be used to build up connection to db and do the query
+	public List<Movie> getMovies() {
 		
-		// Extract data from result set --> do we need this one?
-		// or is it totally fine to have the data in the rs?
-		// at least: for testing purposes to see if it works properly
-      		while(rs.next()){
-      			//Retrieve by column name
-         		String moviename = rs.getString("moviename");
-         		int releaseyear = rs.getInt("releaseyear");
-         		int runtime = rs.getInt("runtime");
-         		String languages = rs.getString("languages");
-         		String countries = rs.getString("countries");
-         		String genres = rs.getString("genres");
-         		
-	} catch (Exception e) { // catch possible exceptions
-		System.err.println("Got an exception! ");
-		System.err.println(e.getMessage());
-	} finally { // clean up environment
-		try { if (rs != null) rs.close(); } catch (SQLException e) { e.printStackTrace(); }
-		try { if (stmt != null) stmt.close(); } catch (SQLException e) { e.printStackTrace(); }
-		try { if (conn != null) conn.close(); } catch (SQLException e) { e.printStackTrace(); }
+		try { // set up connection to the database
+			Connection conn = DriverManager.getConnection(url);
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery(sqlquery);
+
+			// Extract data from result set --> do we need this one?
+			// or is it totally fine to have the data in the rs?
+			// at least: for testing purposes to see if it works properly
+			while(rs.next()){
+				//Retrieve by column name
+				String moviename = rs.getString("moviename");
+				int releaseyear = rs.getInt("releaseyear");
+				int runtime = rs.getInt("runtime");
+				String languages = rs.getString("languages");
+				String countries = rs.getString("countries");
+				String genres = rs.getString("genres");
+				System.out.println(moviename, releaseyear, runtime, languages, countries, genres)
+		// or perhaps better to see if it works: follow Jans advicedo
+		// do a pop up window and look at one attribut of the whole movie object
+		// this is done by: Window.alert(result.get(1).country)
+		
+		} catch (Exception e) { // catch possible exceptions
+			System.err.println("Got an exception! ");
+			System.err.println(e.getMessage());
+		} finally { // clean up environment
+			try { if (rs != null) rs.close(); } catch (SQLException e) { e.printStackTrace(); }
+			try { if (stmt != null) stmt.close(); } catch (SQLException e) { e.printStackTrace(); }
+			try { if (conn != null) conn.close(); } catch (SQLException e) { e.printStackTrace(); }
+	
+	}
+	
+	
+	// BEGINNING OF JANS PROTOTYPES
+	
+	@Override // what/why exactly?
+	public List<Movie> getMoviesFromYear(int year){
+		sqlquery = "SELECT * FROM movietable WHERE releaseyear=year";
+		// or do we have to write sqlquery = "SELECT * FROM movietable WHERE releaseyear=" + year
+		List<Movie> MOVIES = Arrays.asList(this.getMovies()); // or does getMovies already return a list?
+															// than we can do Arrays.asList(rs), or simply MOVIES = rs ?
+		return MOVIES;
+	}
+	
+	public List<Movie> getMoviesFromYear(int yearMin, int yearMax){
+		sqlquery = "SELECT * FROM movietable WHERE releaseyear BETWEEN yearMin AND yearMax";
+		List<Movie> MOVIES = Arrays.asList(this.getMovies());
+		return MOVIES;
+	}
+	
+	public List<Movie> getMoviesFromName(String name){
+		// SQL abfrage nach Filmen die mit name beginnen. (falls möglich)
+		sqlquery = "SELECT * FROM movietable WHERE moviename LIKE %name%";
+		// für diese implementation wäre es besser, den Filmnamen natürlichsprachlich vorliegen zu haben...
+		List<Movie> MOVIES = Arrays.asList(this.getMovies());
+		return MOVIES;
+	}
+	
+	public List<Movie> getMoviesFromCountry(String country){
+		/* SQL abfrage nach Land = country. Falls ihr IDs benützt für die 
+		* Länder könntet ihr mit einem switch case aus dem country String
+		* die ID auslesen
+		*/
+		sqlquery = "SELECT * FROM movietable WHERE countries=country";
+		List<Movie> MOVIES = Arrays.asList(this.getMovies());
+		return MOVIES;
+	}
+	
+	public List<Movie> getMoviesFromLength(int length){
+		sqlquery = "SELECT * FROM movietable WHERE runtime=length";
+		List<Movie> MOVIES = Arrays.asList(this.getMovies());
+		return MOVIES;
+	}
+	
+	public List<Movie> getMoviesFromLength(int lengthMin, int lengthMax){
+		sqlquery = "SELECT * FROM movietable WHERE releaseyear BETWEEN lengthMin AND lengthMax";
+		List<Movie> MOVIES = Arrays.asList(this.getMovies());
+		return MOVIES;
+	}
+	
+	public List<Movie> getMoviesFromLanguage(String language){
+		/* SQL abfrage nach Sprache = language. Falls ihr IDs benützt für die 
+			* Sprachen könntet ihr mit einem switch case aus dem language String
+			* die ID auslesen.
+			*/
+		sqlquery = "SELECT * FROM movietable WHERE languages LIKE %language%"; // auch nötig, wenn mit auswahlbalken arbeiten,
+																			// da die sprache in einem string mit anderen sprachen steht
+		List<Movie> MOVIES = Arrays.asList(this.getMovies());
+		return MOVIES;
+	}
+
+	public List<Movie> getMoviesFromGenre(String genre){
+		/* SQL abfrage nach Genre = genre. Falls ihr IDs benützt für die 
+			* Genres könntet ihr mit einem switch case aus dem genre String
+			* die ID auslesen.
+			*/
+		sqlquery = "SELECT * FROM movietable WHERE genres LIKE %genre%";
+		List<Movie> MOVIES = Arrays.asList(this.getMovies());
+		return MOVIES;
+	}
+
+	// END OF JANS PROTOTYPES
 	
 	
 	
-	
-	
+
 	// perhaps for later: extension of the movie database via INSERT statement
-	// string statements should be replaced whatever the informatics people type in
-	try {
-		Connection conn = DriverManager.getConnection(url);
-		Statement stmt = connection.createStatement();
-		stmt.executeUpdate("INSERT INTO movietable(MOVIENAME,RELEASEYEAR,RUNTIME,LANGUAGES,COUNTRIES,GENRES) " + "VALUES ('moviename', releaseyear, runtime, 'countries', etc...)");
-	} catch (Exception e) { 
-		System.err.println("Got an exception! ");
-		System.err.println(e.getMessage());
-	
+	public void updateMovietable(String moviename, int releaseyear, int runtime, String/LIST?!?! languages, String/list?! countries, String/list genres) {
+		try {
+			Connection conn = DriverManager.getConnection(url);
+			Statement stmt = connection.createStatement();
+			stmt.executeUpdate("INSERT INTO movietable(MOVIENAME,RELEASEYEAR,RUNTIME,LANGUAGES,COUNTRIES,GENRES) " + "VALUES ('moviename', releaseyear, runtime, 'languages', 'countries', 'genres')");
+		} catch (Exception e) { 
+			System.err.println("Got an exception! ");
+			System.err.println(e.getMessage());
+		}
+	}
+
 	
 	// END OF NEW, UNFINISHED CODE SNIPPET
+	
+	
+	
 	
 	
 	
