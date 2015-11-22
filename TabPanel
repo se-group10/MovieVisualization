@@ -1,0 +1,61 @@
+package com.seten.movievisualization.client;
+
+import java.lang.Object;
+
+import com.google.gwt.user.client.ui.TabPane;
+// Was muss genau importiert werden?
+
+public class TabPanel implements EntryPoint
+{
+	// Creates a tab bar with 4 items
+	public void showTabPanels()
+	{
+		Label l1 = new Label ("");
+		l1.setHeight("200");
+		Label l2 = new Label("");
+		l2.setHeight("200");
+		Label l3 = new Label("");
+		l2.setHeight("200");
+		Label l4 = new Label("");
+		// Label??
+			
+		TabPanel tabPanel = new TabPanel();
+			
+		tabPanel.add(l1, "Filter");
+		tabPanel.add(l2, "Celltable");
+		tabPanel.add(l3, "World Map");
+		tabPanel.add(l4, "Maintenance");
+		
+		RootPanel.get("gwtContainer").add(tabPanel);	
+		
+		VerticalPanel panel1 = new VerticalPanel();
+	    panel1.setBorderWidth(1);	    
+	    // panel.setWidth("1000px");
+	      panel.add(table);
+	      panel.add(pager);
+	   
+	    VerticalPanel panel2 = new VerticalPanel();
+		panel2.setBorderWidth(1);	    
+		// panel.setWidth("1000px");
+		
+		VerticalPanel panel3 = new VerticalPanel();
+		panel3.setBorderWidth(1);	    
+		// panel.setWidth("1000px");
+		
+		VerticalPanel panel4 = new VerticalPanel();
+		panel4.setBorderWidth(1);	    
+		// panel.setWidth("1000px");
+		
+		tabPanel.add(l1, panel1);
+		tabPanel.add(l2, panel2);
+		tabPanel.add(l3, panel3);
+		tabPanel.add(l4, panel4);
+	      
+	    
+	    RootPanel.get("gwtContainer").add(panel1);
+	    RootPanel.get("gwtContainer").add(panel2);
+	    RootPanel.get("gwtContainer").add(panel3);
+	    RootPanel.get("gwtContainer").add(panel4);
+		
+	}
+}
