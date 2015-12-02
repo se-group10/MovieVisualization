@@ -59,33 +59,21 @@ public class MovieDBServiceImpl extends RemoteServiceServlet implements MovieDBS
 			if(m != null){
 				if(m.country.equalsIgnoreCase("United States of America")) {
 					americaCounter++;
-				}
-				
-				
-			}
-		}
-		
+				}}}
 		for(Movie m : MOVIES) {
 			if(m != null){
 				if(m.country.equalsIgnoreCase("UK")) {
 					unitedKingdomCounter++;
-				}
-				
-				
-			}
-		}
-		
+				}}}
 		for(Movie m : MOVIES) {
 			if(m != null){
 				if(m.country.equalsIgnoreCase("India")) {
 					indiaCounter++;
-				}
-				
-				
-			}
-		}
-		
+				}}}
 	*/
+		
+		if(i< 1000){
+			
 		
 		List<KeyPairValue> KEYVALUEPAIR = Arrays.asList(
 				
@@ -102,6 +90,24 @@ public class MovieDBServiceImpl extends RemoteServiceServlet implements MovieDBS
 		
 		
 		return KEYVALUEPAIR;
+		
+		} else {
+			List<KeyPairValue> KEYVALUEPAIR = Arrays.asList(
+					
+					new KeyPairValue("GB", 80),
+					new KeyPairValue("United States of America", 70),
+					new KeyPairValue("India", 60),
+					new KeyPairValue("Canada", 50),
+					new KeyPairValue("Germany", 40),
+					new KeyPairValue("France", 30),
+					new KeyPairValue("Brazil", 20),
+					new KeyPairValue("Russia", 10)
+					
+					);
+			
+			
+			return KEYVALUEPAIR;
+		}
 	}
 
 }

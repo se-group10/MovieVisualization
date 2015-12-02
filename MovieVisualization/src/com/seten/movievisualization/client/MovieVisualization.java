@@ -10,6 +10,14 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TabPanel;
+import com.kiouri.sliderbar.client.event.BarValueChangedEvent;
+import com.kiouri.sliderbar.client.event.BarValueChangedHandler;
+import com.kiouri.sliderbar.client.solution.adv.AdvancedSliderBar;
+import com.kiouri.sliderbar.client.solution.iph.IpSliderBar146;
+import com.kiouri.sliderbar.client.solution.kde.KDEHorizontalLeftBW;
+import com.kiouri.sliderbar.client.solution.simplehorizontal.SliderBarSimpleHorizontal;
+import com.kiouri.sliderbar.client.solution.ybar.YBar;
+
 
 
 
@@ -19,12 +27,13 @@ import com.google.gwt.user.client.ui.TabPanel;
 public class MovieVisualization implements EntryPoint {
 	
 	private MovieDBServiceAsync movieDBSvc = GWT.create(MovieDBService.class);
-	
+	private Geomap gmp = new Geomap();
 	
 	public void onModuleLoad() {
 	// makes an rpc request
 	getMovies();
-	getKeyValuePair();
+	getKeyValuePair(-1);
+	
 	
 	Label l1 = new Label ("");
 	l1.setHeight("200");
@@ -37,8 +46,41 @@ public class MovieVisualization implements EntryPoint {
 	tabPanel.add(l2, "World Map");
 	tabPanel.add(l3, "Maintenance");
 	RootPanel.get("gwtContainer").add(tabPanel);
-	}
+	
+	//Slider
+	SliderBarSimpleHorizontal sbsh = new SliderBarSimpleHorizontal(200, "100", true);
+	sbsh.drawMarks("white", 500);
+	sbsh.setMinMarkStep(1);
+	sbsh.setMaxValue(2015);
+	
+	sbsh.addBarValueChangedHandler(new BarValueChangedHandler() {
+		
+		@Override
+		public void onBarValueChanged(BarValueChangedEvent event) {
+			int change = event.getValue();
+			String changes = "" + change;
+			getKeyValuePair(change);
+			gmp.redraw();
+			Window.alert(changes);
+			//gmp.getGeoChartTwo().clearChart();
+		}
+		
+	});
+	
+	RootPanel.get("gwtContainer").add(sbsh);
+	
+	//AdvancedSliderBar asv = new AdvancedSliderBar();
+	//RootPanel.get("gwtContainer").add(asv);	
 
+	
+	//KDEHorizontalLeftBW kde = new KDEHorizontalLeftBW(10, "100");
+	//RootPanel.get("gwtContainer").add(kde);
+	 
+	
+	//RangeSlider rs = new RangeSlider();
+	//RootPanel.get("gwtContainer").add(rs);
+	}
+	
 	private void getMovies(){
 		//initializes service proxy
 		if (movieDBSvc == null){
@@ -69,7 +111,7 @@ public class MovieVisualization implements EntryPoint {
 		
 	}
 	
-	private void getKeyValuePair(){
+	private void getKeyValuePair(int year){
 		// initializes service proxy
 		if (movieDBSvc == null){
 			movieDBSvc = GWT.create(MovieDBService.class);
@@ -88,11 +130,13 @@ public class MovieVisualization implements EntryPoint {
 			@Override
 			public void onSuccess(List<KeyPairValue> result) {
 			// Window.alert("RPC query succesfull");
-				Geomap gmp = new Geomap(result);
+				gmp.setOBJECTS(result);
+				//gmp = new Geomap(result);
 				gmp.initialize();	
+				
 			}
 		};
 		// actual request to the serverside
-		movieDBSvc.getKeyValuePair(1, callback);
+		movieDBSvc.getKeyValuePair(year, callback);
 	}
 }
