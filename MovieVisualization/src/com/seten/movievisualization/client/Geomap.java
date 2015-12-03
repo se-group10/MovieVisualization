@@ -23,56 +23,72 @@ public class Geomap {
 	public Geomap(List <KeyPairValue> DATA) {
 		OBJECTS = DATA;
 	}
-  
+	
+	public void fillArray(Object[][] objects) {
+		int counter = 0;
+		for(int i = 1; i<OBJECTS.size() + 1; i++) {
+			
+			for(int y = 0; y<2; y++) {
+				if(y==0) {
+					objects[i][y] = OBJECTS.get(counter).country;
+				}
+				if(y==1) {
+					objects[i][y] = OBJECTS.get(counter).counter;
+				}
+			}
+			
+			counter++;
+		}
+	}
 	public void initialize () {
 	
-	//With RPC 
-	int numberOfCountries = OBJECTS.size();
-	Object[][] geoDataObjects = new Object[numberOfCountries + 1][2];
-	geoDataObjects[0][0] = "Country";
-	geoDataObjects[0][1] = "Movies per Year";
+		//With RPC 
+		int numberOfCountries = OBJECTS.size();
+		Object[][] geoDataObjects = new Object[numberOfCountries + 1][2];
+		geoDataObjects[0][0] = "Country";
+		geoDataObjects[0][1] = "Movies per Year";
 	
-	//Fill Object[][] - Array as basis for dataTable.
-	int counter = 0;
-	for(int i = 1; i<OBJECTS.size() + 1; i++) {
+		//Fill Object[][] - Array as basis for dataTable.
+		int counter = 0;
+		for(int i = 1; i<OBJECTS.size() + 1; i++) {
+			
+			for(int y = 0; y<2; y++) {
+				if(y==0) {
+					geoDataObjects[i][y] = OBJECTS.get(counter).country;
+				}
+				if(y==1) {
+					geoDataObjects[i][y] = OBJECTS.get(counter).counter;
+				}
+			}
 		
-		for(int y = 0; y<2; y++) {
-			if(y==0) {
-				geoDataObjects[i][y] = OBJECTS.get(counter).country;
-			}
-			if(y==1) {
-				geoDataObjects[i][y] = OBJECTS.get(counter).counter;
-			}
+			counter++;
 		}
-		
-		counter++;
-	}
 	
-	//Create DataTable from array
-	this.geoTable = ChartHelper.arrayToDataTable(geoDataObjects);
+		//Create DataTable from array
+		this.geoTable = ChartHelper.arrayToDataTable(geoDataObjects);
   	
-	if(this.geoChart == null){
+		if(this.geoChart == null){
 		
-		//Create new GeoChart
-		this.geoChart = new GeoChart();
+			//Create new GeoChart
+			this.geoChart = new GeoChart();
 
 	
-		//GeoChart Options and Axis
-		this.options = GeoChartOptions.create();
-		this.geoChartColorAxis = GeoChartColorAxis.create();
-		geoChartColorAxis.setColors("yellow", "green", "red");
-		options.setColorAxis(geoChartColorAxis);
-		options.setDatalessRegionColor("grey");
-	
-		//GeoMap draw
-		geoChart.draw(geoTable, options);
+			//GeoChart Options and Axis
+			this.options = GeoChartOptions.create();
+			this.geoChartColorAxis = GeoChartColorAxis.create();
+			geoChartColorAxis.setColors("yellow", "green", "red");
+			options.setColorAxis(geoChartColorAxis);
+			options.setDatalessRegionColor("grey");
+			
+			//GeoMap draw
+			geoChart.draw(geoTable, options);
+			
+			
 		
-	
-		
-		//Add to container
-		RootPanel.get("gwtContainer").add(geoChart);
+			//Add to container
+			RootPanel.get("gwtContainer").add(geoChart);
+			}
 		}
-	}
 	
 	public void redraw() {
 		//geoChart.clearChart();
@@ -80,7 +96,6 @@ public class Geomap {
 		//geoChartTwo.redraw();
 	}
 	
-
 	
 	public List<KeyPairValue> getOBJECTS() {
 		return OBJECTS;

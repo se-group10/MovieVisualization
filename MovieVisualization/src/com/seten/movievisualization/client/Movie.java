@@ -5,9 +5,7 @@ import java.util.Date;
 //makes the class serializable for an rpc connection
 public class Movie implements Serializable {
 
-	/**
-	 * 
-	 */
+	
 public   String name;
 public  Date releasedate;
 public  String country;

@@ -10,6 +10,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TabPanel;
+import com.google.gwt.user.client.ui.TextBox;
 import com.kiouri.sliderbar.client.event.BarValueChangedEvent;
 import com.kiouri.sliderbar.client.event.BarValueChangedHandler;
 import com.kiouri.sliderbar.client.solution.adv.AdvancedSliderBar;
@@ -28,6 +29,7 @@ public class MovieVisualization implements EntryPoint {
 	
 	private MovieDBServiceAsync movieDBSvc = GWT.create(MovieDBService.class);
 	private Geomap gmp = new Geomap();
+	private TextBox tb;
 	
 	public void onModuleLoad() {
 	// makes an rpc request
@@ -47,6 +49,8 @@ public class MovieVisualization implements EntryPoint {
 	tabPanel.add(l3, "Maintenance");
 	RootPanel.get("gwtContainer").add(tabPanel);
 	
+	tb = new TextBox();
+	RootPanel.get("gwtContainer").add(tb);
 	//Slider
 	SliderBarSimpleHorizontal sbsh = new SliderBarSimpleHorizontal(200, "100", true);
 	sbsh.drawMarks("white", 500);
@@ -58,28 +62,23 @@ public class MovieVisualization implements EntryPoint {
 		@Override
 		public void onBarValueChanged(BarValueChangedEvent event) {
 			int change = event.getValue();
-			String changes = "" + change;
+			String changes = change + "";
+			tb.setText(changes);
 			getKeyValuePair(change);
 			//gmp.redraw();
-			Window.alert(changes);
+			//Window.alert(changes);
 			//gmp.getGeoChartTwo().clearChart();
 		}
 		
 	});
 	
 	RootPanel.get("gwtContainer").add(sbsh);
-	
-	//AdvancedSliderBar asv = new AdvancedSliderBar();
-	//RootPanel.get("gwtContainer").add(asv);	
 
-	
-	//KDEHorizontalLeftBW kde = new KDEHorizontalLeftBW(10, "100");
-	//RootPanel.get("gwtContainer").add(kde);
-	 
-	
-	//RangeSlider rs = new RangeSlider();
-	//RootPanel.get("gwtContainer").add(rs);
 	}
+	
+	/*private void setTextBox(String text) {
+		t
+	}*/
 	
 	private void getMovies(){
 		//initializes service proxy
