@@ -53,26 +53,7 @@ public class MovieDBServiceImpl extends RemoteServiceServlet implements MovieDBS
 	}
 	
 	public List<KeyPairValue> getKeyValuePair(int i) {
-		
-		/*	
-		for(Movie m : MOVIES) {
-			if(m != null){
-				if(m.country.equalsIgnoreCase("United States of America")) {
-					americaCounter++;
-				}}}
-		for(Movie m : MOVIES) {
-			if(m != null){
-				if(m.country.equalsIgnoreCase("UK")) {
-					unitedKingdomCounter++;
-				}}}
-		for(Movie m : MOVIES) {
-			if(m != null){
-				if(m.country.equalsIgnoreCase("India")) {
-					indiaCounter++;
-				}}}
-	*/
-		
-		if(i< 1000){
+		if(i< 100){
 			
 		
 		List<KeyPairValue> KEYVALUEPAIR = Arrays.asList(

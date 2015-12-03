@@ -50,19 +50,20 @@ public class MovieVisualization implements EntryPoint {
 	RootPanel.get("gwtContainer").add(tabPanel);
 	
 	tb = new TextBox();
+	tb.setTitle("Select year");
 	RootPanel.get("gwtContainer").add(tb);
 	//Slider
-	SliderBarSimpleHorizontal sbsh = new SliderBarSimpleHorizontal(200, "100", true);
-	sbsh.drawMarks("white", 500);
-	sbsh.setMinMarkStep(1);
-	sbsh.setMaxValue(2015);
+	SliderBarSimpleHorizontal sbsh = new SliderBarSimpleHorizontal(215, "2015", true);
+	//sbsh.drawMarks("white", 500);
+	//sbsh.setMinMarkStep(1);
+	//sbsh.setMaxValue(2015);
 	
 	sbsh.addBarValueChangedHandler(new BarValueChangedHandler() {
 		
 		@Override
 		public void onBarValueChanged(BarValueChangedEvent event) {
 			int change = event.getValue();
-			String changes = change + "";
+			String changes = (change + 1800) + "";
 			tb.setText(changes);
 			getKeyValuePair(change);
 			//gmp.redraw();
