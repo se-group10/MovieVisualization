@@ -66,7 +66,9 @@ public class Geomap {
 	
 		//GeoMap draw
 		geoChart.draw(geoTable, options);
+		
 	
+		
 		//Add to container
 		RootPanel.get("gwtContainer").add(geoChart);
 		}
@@ -77,6 +79,8 @@ public class Geomap {
 		geoChart.draw(geoTable, options);
 		//geoChartTwo.redraw();
 	}
+	
+
 	
 	public List<KeyPairValue> getOBJECTS() {
 		return OBJECTS;

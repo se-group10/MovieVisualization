@@ -60,7 +60,7 @@ public class MovieVisualization implements EntryPoint {
 			int change = event.getValue();
 			String changes = "" + change;
 			getKeyValuePair(change);
-			gmp.redraw();
+			//gmp.redraw();
 			Window.alert(changes);
 			//gmp.getGeoChartTwo().clearChart();
 		}
@@ -132,7 +132,8 @@ public class MovieVisualization implements EntryPoint {
 			// Window.alert("RPC query succesfull");
 				gmp.setOBJECTS(result);
 				//gmp = new Geomap(result);
-				gmp.initialize();	
+				gmp.initialize();
+				gmp.redraw();
 				
 			}
 		};
